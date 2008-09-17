@@ -54,9 +54,11 @@ module Thin
     
       # Stop and start the servers.
       def restart
-        stop
-        sleep 0.1 # Let's breath a bit shall we ?
-        start
+        with_each_server { |n|
+          stop_server n
+          sleep 0.1 # Let's breath a bit shall we ?
+          start_server n
+        }
       end
     
       def server_id(number)
